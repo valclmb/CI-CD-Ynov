@@ -1,0 +1,6 @@
+{
+  "source": {
+    "include": ["."],
+    "exclude": ["node_modules", "dist", "tailwind.config.js"]
+  }
+}
