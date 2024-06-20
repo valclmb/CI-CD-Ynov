@@ -6,7 +6,7 @@ export default function App() {
     <div className="h-screen flex items-center justify-center">
       <Card className="min-w-[500px]">
         <CardHeader>
-          <h1 className="text-3xl text-center">Créer un compte</h1>
+          <h1 className="text-3xl text-center ">Créer un compte</h1>
         </CardHeader>
         <CardContent>
           <LoginForm />
