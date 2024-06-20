@@ -43,6 +43,7 @@ jobs:
         with:
           # Upload entire repository
           path: ./dist
+          if-no-files-found: error
 
   # Deploy job
   deploy:
