@@ -18,50 +18,45 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-            version: 8
-            run_install: false
-          
+          version: 8
+          run_install: false
+
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          
+          cache: "pnpm"
+
       - name: Install dependencies
         run: |
           pnpm install --frozen-lockfile
           pnpm run build 
           pnpm test
-          
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
 
       - name: Upload artifcat
         uses: actions/upload-pages-artifact@v2
-        with: 
-          # Upload entire repository 
-          path: dist
-          
+        with:
+          # Upload entire repository
+          path: ./dist
+
   # Deploy job
-  deploy: 
-  # Deploy to the github-pages environment 
-    environment: 
+  deploy:
+    # Deploy to the github-pages environment
+    environment:
       name: github-pages
       url: ${{steps.deployment.outputs.page_url}}
     runs-on: ubuntu-latest
     # Grant GITHUB_TOKEN the permissions required to make a page deployment
-    permissions: 
+    permissions:
       pages: write
-      id-token: write 
+      id-token: write
     needs: build_test
     steps:
-      - name: Deploy to Github Pages 
+      - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v2
-    
-    
-  
-     
-
