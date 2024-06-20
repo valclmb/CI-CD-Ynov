@@ -34,6 +34,11 @@ jobs:
           pnpm run build 
           pnpm test
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
@@ -44,10 +49,7 @@ jobs:
           # Upload entire repository
           path: ./dist
           if-no-files-found: error
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+     
 
   # Deploy job
   deploy:
