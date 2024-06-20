@@ -31,6 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install --frozen-lockfile
+          pnpm run jsdoc
           pnpm run build 
           pnpm test
 
