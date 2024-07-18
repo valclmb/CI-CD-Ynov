@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { LoginForm } from "../components/LoginForm/LoginForm";
+import { LoginForm } from "../components/UserForm/UserForm";
 
 test("Test success Login Form", () => {
   render(<LoginForm />);

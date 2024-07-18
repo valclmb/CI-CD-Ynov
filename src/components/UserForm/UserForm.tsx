@@ -8,16 +8,20 @@ import {
   FormMessage,
 } from "../ui/form";
 
+import { createUser } from "@/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { toast } from "../ui/use-toast";
 import { formSchema } from "./formSchema";
 
-type Login = z.infer<typeof formSchema>;
-
-export const LoginForm = () => {
-  const form = useForm<Login>({
+export type User = z.infer<typeof formSchema>;
+type UserFormProps = {
+  close: () => void;
+};
+export const UserForm = ({ close }: UserFormProps) => {
+  const form = useForm<User>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
@@ -29,9 +33,24 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (data: Login) => {
-    console.log(data);
-    localStorage.setItem("user", JSON.stringify(data));
+  const onSubmit = (data: User) => {
+    createUser(data).then((res) => {
+      close();
+      if (res.success) {
+        toast({
+          title: "Utilisateur créé !",
+          description: "Votre compte a bien été créé",
+        });
+        form.reset();
+
+        return;
+      }
+
+      toast({
+        title: "Une erreur est survenue !",
+        description: res.message,
+      });
+    });
   };
 
   return (

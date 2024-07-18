@@ -1,17 +1,17 @@
-import { LoginForm } from "./components/LoginForm/LoginForm";
-import { Card, CardContent, CardHeader } from "./components/ui/card";
+import { AddUser } from "./components/AddUser";
+import { Toaster } from "./components/ui/toaster";
+import { UserList } from "./components/UserList";
 
 export default function App() {
   return (
-    <div className="h-screen flex items-center justify-center">
-      <Card className="min-w-[500px]">
-        <CardHeader>
-          <h1 className="text-3xl text-center ">Créer un compte</h1>
-        </CardHeader>
-        <CardContent>
-          <LoginForm />
-        </CardContent>
-      </Card>
+    <div className="h-screen ">
+      <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Liste des utilisateurs
+      </h1>
+
+      <AddUser />
+      <UserList />
+      <Toaster />
     </div>
   );
 }

@@ -4,7 +4,7 @@
  * @param {Date} birth The birth date of the person.
  * @returns {number} The age in years of the person
  */
-export const calculateAge = (birth: Date) => {
+const calculateAge = (birth: Date) => {
   if (birth > new Date()) {
     throw new Error("Birth date cannot be in the future");
   }
@@ -26,7 +26,7 @@ export const calculateAge = (birth: Date) => {
  * @param {number} minAge - The minimum age to compare against.
  * @returns {boolean} Returns true if the person's age is greater than or equal to the minimum age, otherwise returns false.
  */
-export const ageIsGreatherThan = (birth: Date, minAge: number) => {
+const ageIsGreatherThan = (birth: Date, minAge: number) => {
   const age = calculateAge(birth);
   if (age < minAge) {
     return false;
@@ -39,7 +39,7 @@ export const ageIsGreatherThan = (birth: Date, minAge: number) => {
  * @param {string} zipCode - The zip code to validate.
  * @returns {boolean} True if the zip code is valid, false otherwise.
  */
-export const isValidZipCode = (zipCode: string) => {
+const isValidZipCode = (zipCode: string) => {
   return zipCode.length === 5 && /^\d{5}$/.test(zipCode);
 };
 
@@ -49,7 +49,7 @@ export const isValidZipCode = (zipCode: string) => {
  * @param {string} email - The email to validate.
  * @returns {boolean} A boolean indicating whether the email is valid or not.
  */
-export const isValidEmail = (email: string) => {
+const isValidEmail = (email: string) => {
   return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
 };
 
@@ -59,6 +59,14 @@ export const isValidEmail = (email: string) => {
  * @param {string} value - The string to be checked.
  * @returns {boolean} A boolean indicating whether the string has no special characters.
  */
-export const hasNoSpecialCharacters = (value: string) => {
+const hasNoSpecialCharacters = (value: string) => {
   return /^[a-zàâäéèêëîïôöûüùç' -]+$/i.test(value);
+};
+
+export {
+  ageIsGreatherThan,
+  calculateAge,
+  hasNoSpecialCharacters,
+  isValidEmail,
+  isValidZipCode,
 };
