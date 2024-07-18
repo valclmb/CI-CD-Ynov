@@ -1,7 +1,7 @@
 import { User } from "./components/UserForm/UserForm";
 
-const port = import.meta.env.VITE_API_PORT;
-const API = `http://localhost:${port}`;
+// const port = import.meta.env.VITE_API_PORT;
+const API = `http://localhost:8000`;
 export const getAllUsers = async () => {
   try {
     const response = await fetch(`${API}/users`);
