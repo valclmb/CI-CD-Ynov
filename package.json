@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://valclmb.github.io/CI-CD-Ynov/",
+  "homepage": "https://valclmb.github.io/ci-cd-ynov/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
