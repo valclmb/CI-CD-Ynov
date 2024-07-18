@@ -1,6 +1,6 @@
 import { User } from "./components/UserForm/UserForm";
 
-const port = process.env.VITE_API_PORT;
+const port = import.meta.env.VITE_API_PORT;
 const API = `http://localhost:${port}`;
 export const getAllUsers = async () => {
   try {
