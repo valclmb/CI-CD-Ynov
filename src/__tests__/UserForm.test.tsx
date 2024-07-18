@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { LoginForm } from "../components/UserForm/UserForm";
+import { UserForm } from "../components/UserForm/UserForm";
 
 test("Test success Login Form", () => {
-  render(<LoginForm />);
+  render(<UserForm close={() => {}} />);
   const firstName = screen.getByTestId("firstName");
   const lastName = screen.getByTestId("lastName");
   const email = screen.getByTestId("email");
