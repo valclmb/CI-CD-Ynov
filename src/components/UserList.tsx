@@ -7,26 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { User } from "./UserForm/UserForm";
 
 type UserList = User & { id: number };
 
 export const UserList = () => {
-  const [users, setUsers] = useState<UserList[]>([]);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
+  });
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const res = await getAllUsers();
-        setUsers(res.users);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  console.log(data);
 
-    getUsers();
-  }, []);
+  if (isLoading) return <>Loading...</>;
+  if (isError) return <>ERROR</>;
 
   return (
     <Table>
@@ -41,7 +36,7 @@ export const UserList = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
+        {data.users.map((user: UserList) => (
           <TableRow key={user.id}>
             <TableCell>{user.lastName.toUpperCase()}</TableCell>
             <TableCell>{user.firstName}</TableCell>

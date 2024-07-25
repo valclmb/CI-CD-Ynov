@@ -27,10 +27,6 @@ const getAllUsers = async function (req, res) {
   const sql = "SELECT * FROM users";
   const [rows] = await pool.query(sql);
 
-  if (!rows.length) {
-    return res.status(404).json({ message: "No users found", success: false });
-  }
-
   return res.status(200).json({ users: rows, success: true });
 };
 

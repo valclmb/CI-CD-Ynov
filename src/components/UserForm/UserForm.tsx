@@ -10,6 +10,7 @@ import {
 
 import { createUser } from "@/api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "react-query";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -21,6 +22,7 @@ type UserFormProps = {
   close: () => void;
 };
 export const UserForm = ({ close }: UserFormProps) => {
+  const queryClient = useQueryClient();
   const form = useForm<User>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,14 +36,20 @@ export const UserForm = ({ close }: UserFormProps) => {
   });
 
   const onSubmit = (data: User) => {
-    createUser(data).then((res) => {
-      close();
+    mutation.mutate(data);
+  };
+
+  const mutation = useMutation({
+    mutationFn: (data: User) => createUser(data),
+    onSuccess: (res) => {
       if (res.success) {
         toast({
           title: "Utilisateur créé !",
           description: "Votre compte a bien été créé",
         });
         form.reset();
+        queryClient.invalidateQueries(["users"]);
+        close();
 
         return;
       }
@@ -50,8 +58,8 @@ export const UserForm = ({ close }: UserFormProps) => {
         title: "Une erreur est survenue !",
         description: res.message,
       });
-    });
-  };
+    },
+  });
 
   return (
     <Form {...form}>

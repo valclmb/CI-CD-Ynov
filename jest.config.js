@@ -4,6 +4,7 @@ export default {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
   coveragePathIgnorePatterns: ["/node-modules/", "/src/components/ui/"],
+
   testEnvironment: "jest-environment-jsdom",
   transform: {
     "^.+\\.ts?$": "ts-jest",
