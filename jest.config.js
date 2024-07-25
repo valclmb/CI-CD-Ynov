@@ -1,12 +1,17 @@
 export default {
+  // eslint-disable-next-line no-undef
   preset: "ts-jest",
+  collectCoverage: true,
+  coverageDirectory: "reports/coverage",
+  coverageProvider: "v8",
+  collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
   testEnvironment: "jest-environment-jsdom",
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    // process `*.tsx` files with `ts-jest`
+    "^.+\\.ts?$": "ts-jest",
   },
+  transformIgnorePatterns: ["<rootDir>/node_modules/"],
   moduleNameMapper: {
-    "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js",
     "^@/(.*)$": "<rootDir>/src/$1", // Support alias '@/'
   },
+  testMatch: ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
 };
