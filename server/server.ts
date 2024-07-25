@@ -1,7 +1,7 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import mysql from "mysql2";
+const cors = require("cors");
+const dotenv = require("dotenv");
+const express = require("express");
+const mysql = require("mysql2");
 import { getAllUsers, postUsers } from "./src/api";
 
 // Charger les variables d'environnement
