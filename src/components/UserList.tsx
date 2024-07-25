@@ -18,8 +18,6 @@ export const UserList = () => {
     queryFn: getAllUsers,
   });
 
-  console.log(data);
-
   if (isLoading) return <>Loading...</>;
   if (isError) return <>ERROR</>;
 

@@ -30,21 +30,21 @@ services:
       - db
     command: node server.js
 
-  react:
-    image: react
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    restart: always
-    ports:
-      - 5173:5173
-    environment:
-      - PORT=8000
-    depends_on:
-      - server
+  # react:
+  #   image: react
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 5173:5173
+  #   environment:
+  #     - PORT=8000
+  #   depends_on:
+  #     - server
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080

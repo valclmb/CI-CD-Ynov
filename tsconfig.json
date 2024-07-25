@@ -6,6 +6,7 @@
     "module": "ES2022",
     "skipLibCheck": true,
     "types": ["node", "jest"],
+    "allowJs": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -28,6 +29,11 @@
     },
     "esModuleInterop": true
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "server"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "typedocOptions": {
+    "entryPoints": ["src/**/*.ts", "server/src/*.ts"],
+    "exclude": ["./src/components/ui/**/*", "./src/lib/**/*"],
+    "out": "public/docs" // <--- output directory,
+  }
 }
