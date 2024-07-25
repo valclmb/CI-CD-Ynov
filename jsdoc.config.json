@@ -1,7 +1,7 @@
 {
   "source": {
     "include": ["."],
-    "exclude": ["node_modules/", "server/"],
+    "exclude": ["node_modules/", "server/", "tailwind.config.js"],
     "source": {
       "includePattern": "\\.(jsx|js|ts|tsx)$"
     },
