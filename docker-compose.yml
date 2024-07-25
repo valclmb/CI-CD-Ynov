@@ -38,7 +38,7 @@ services:
     ports:
       - 5173:5173
     environment:
-      - URL=${VITE_API_URL}
+      - PORT=8000
     depends_on:
       - server
 
