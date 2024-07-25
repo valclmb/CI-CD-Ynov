@@ -1,28 +1,21 @@
-import { User } from "./components/UserForm/UserForm";
-
-// const port = import.meta.env.VITE_API_PORT;
+import axios from "axios";
 const API = `http://localhost:8000`;
-export const getAllUsers = async () => {
+export const countUsers = async () => {
   try {
-    const response = await fetch(`${API}/users`);
-    return response.json();
+    const response = await axios.get(`${API}/users`);
+    return response.data.utilisateurs.length;
   } catch (error) {
-    console.error("Error fetching users");
+    console.error(error);
     throw error;
   }
 };
 
-export const createUser = (user: User) => {
+export const getAllUsers = async () => {
   try {
-    return fetch(`${API}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    }).then((res) => res.json());
+    const response = await axios.get(`${API}/users`);
+    return response.data.utilisateurs;
   } catch (error) {
-    console.error("Error creating user");
+    console.error(error);
     throw error;
   }
 };
