@@ -2,9 +2,8 @@ export default {
   // eslint-disable-next-line no-undef
   preset: "ts-jest",
   collectCoverage: true,
-  coverageDirectory: "reports/coverage",
-  coverageProvider: "v8",
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
+  coveragePathIgnorePatterns: ["/node-modules/", "/src/components/ui/"],
   testEnvironment: "jest-environment-jsdom",
   transform: {
     "^.+\\.ts?$": "ts-jest",
