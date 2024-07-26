@@ -1,1 +1,2 @@
-process.env.VITE_API_URL = "http://localhost:8000/api";
+process.env.VITE_API_URL =
+  "https://ci-cd-ynov-fetnrfgq1-valclmbs-projects.vercel.app";
