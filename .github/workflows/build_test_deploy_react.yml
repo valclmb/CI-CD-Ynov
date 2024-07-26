@@ -6,6 +6,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+  repository_dispatch: 
+    types: [dispatch-event]
+  
 # A workflow run is made up of one ore more jobs that can run sequentially or in parallel
 jobs:
   build_test:
