@@ -1,21 +1,39 @@
 import "@testing-library/jest-dom";
 
 import { renderWithQueryClient } from "@/lib/test-utils";
-import { fireEvent, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { UserForm } from "../components/UserForm/UserForm";
 
 describe("UserForm Component", () => {
-  test("Test success UserForm", () => {
+  let firstName: HTMLElement,
+    lastName: HTMLElement,
+    email: HTMLElement,
+    birthDate: HTMLElement,
+    city: HTMLElement,
+    zipCode: HTMLElement,
+    submit: HTMLElement;
+
+  beforeEach(async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
+    firstName = screen.getByTestId("firstName");
+    lastName = screen.getByTestId("lastName");
+    email = screen.getByTestId("email");
+    birthDate = screen.getByTestId("birthDate");
+    city = screen.getByTestId("city");
+    zipCode = screen.getByTestId("zipCode");
+    submit = screen.getByRole("button", { name: "Enregistrer" });
 
-    const firstName = screen.getByTestId("firstName");
-    const lastName = screen.getByTestId("lastName");
-    const email = screen.getByTestId("email");
-    const birthDate = screen.getByTestId("birthDate");
-    const city = screen.getByTestId("city");
-    const zipCode = screen.getByTestId("zipCode");
-    const submit = screen.getByRole("button");
+    await act(() => {
+      fireEvent.change(firstName, { target: { value: "John" } });
+      fireEvent.change(lastName, { target: { value: "Doe" } });
+      fireEvent.change(email, { target: { value: "Johndoe@email.com" } });
+      fireEvent.change(birthDate, { target: { value: "2000-01-01" } });
+      fireEvent.change(city, { target: { value: "Paris" } });
+      fireEvent.change(zipCode, { target: { value: "75000" } });
+    });
+  });
 
+  test("UserForm is rendered", () => {
     expect(firstName).toBeInTheDocument();
     expect(lastName).toBeInTheDocument();
     expect(email).toBeInTheDocument();
@@ -23,23 +41,80 @@ describe("UserForm Component", () => {
     expect(city).toBeInTheDocument();
     expect(zipCode).toBeInTheDocument();
     expect(submit).toBeInTheDocument();
-
-    fireEvent.change(firstName, { target: { value: "John" } });
-    fireEvent.change(lastName, { target: { value: "Doe" } });
-    fireEvent.change(email, { target: { value: "JohDoe@email.com" } });
-    fireEvent.change(birthDate, { target: { value: "2000-01-01" } });
-    fireEvent.change(city, { target: { value: "Paris" } });
-    fireEvent.change(zipCode, { target: { value: "75000" } });
-
-    fireEvent.click(submit);
   });
 
-  test("Test error UserForm", () => {
+  test("Test success UserForm", async () => {
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => ({ message: "User created", success: true }),
+      })
+    );
+
+    expect(submit).toBeEnabled();
+
+    await act(async () => {
+      fireEvent.submit(submit);
+    });
+
+    expect(screen.getByText("Utilisateur créé !")).toBeInTheDocument();
+  });
+
+  test("UserForm buttons become disabled if invalid email ", async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
 
-    const submit = screen.getByRole("button");
+    expect(submit).toBeEnabled();
 
-    fireEvent.click(submit);
-    expect(screen.getByText("Champ requis")).toBeInTheDocument();
+    await act(() => {
+      fireEvent.change(email, { target: { value: "Johndoeemail.com" } });
+    });
+
+    expect(submit).toBeDisabled();
+  });
+
+  test("UserForm buttons become disabled if age is less than 18 ", async () => {
+    renderWithQueryClient(<UserForm close={() => {}} />);
+
+    expect(submit).toBeEnabled();
+
+    await act(() => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 15);
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Les mois sont indexés à partir de 0
+      const day = String(date.getDate()).padStart(2, "0");
+
+      fireEvent.change(birthDate, {
+        target: { value: `${year}-${month}-${day}` },
+      });
+    });
+
+    expect(submit).toBeDisabled();
+  });
+
+  test("UserForm buttons become disabled if zip code is invalid ", async () => {
+    renderWithQueryClient(<UserForm close={() => {}} />);
+
+    expect(submit).toBeEnabled();
+
+    await act(() => {
+      fireEvent.change(zipCode, { target: { value: "750000" } });
+    });
+
+    expect(submit).toBeDisabled();
+  });
+});
+
+describe("UserForm Component empty", () => {
+  test("UserForm buttons is disabled if empty ", async () => {
+    renderWithQueryClient(<UserForm close={() => {}} />);
+
+    const submit = screen.getByRole("button", { name: "Enregistrer" });
+
+    await act(async () => {
+      fireEvent.click(submit);
+    });
+    expect(submit).toBeDisabled();
   });
 });

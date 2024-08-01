@@ -1,5 +1,6 @@
 export default {
   // eslint-disable-next-line no-undef
+  setupFilesAfterEnv: ["<rootDir>/setup.ts"],
   preset: "ts-jest",
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],

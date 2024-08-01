@@ -50,7 +50,7 @@ const isValidZipCode = (zipCode: string) => {
  * @returns {boolean} A boolean indicating whether the email is valid or not.
  */
 const isValidEmail = (email: string) => {
-  return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
+  return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(email);
 };
 
 /**
@@ -59,6 +59,7 @@ const isValidEmail = (email: string) => {
  * @param {string} value - The string to be checked.
  * @returns {boolean} A boolean indicating whether the string has no special characters.
  */
+
 const hasNoSpecialCharacters = (value: string) => {
   return /^[a-zàâäéèêëîïôöûüùç' -]+$/i.test(value);
 };

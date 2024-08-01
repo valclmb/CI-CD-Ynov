@@ -21,6 +21,7 @@ export type User = z.infer<typeof formSchema>;
 type UserFormProps = {
   close: () => void;
 };
+
 export const UserForm = ({ close }: UserFormProps) => {
   const queryClient = useQueryClient();
   const form = useForm<User>({
@@ -29,7 +30,7 @@ export const UserForm = ({ close }: UserFormProps) => {
       firstName: "",
       lastName: "",
       email: "",
-      birthDate: "",
+      birthDate: "2000-01-01",
       city: "",
       zipCode: "",
     },
@@ -64,8 +65,8 @@ export const UserForm = ({ close }: UserFormProps) => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className=" flex flex-col justify-center gap-3"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           name="firstName"
@@ -140,7 +141,9 @@ export const UserForm = ({ close }: UserFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Enregistrer</Button>
+        <Button role="button" type="submit" disabled={!form.formState.isValid}>
+          Enregistrer
+        </Button>
       </form>
     </Form>
   );
