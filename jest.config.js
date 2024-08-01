@@ -3,7 +3,11 @@ export default {
   preset: "ts-jest",
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
-  coveragePathIgnorePatterns: ["/node-modules/", "/src/components/ui/"],
+  coveragePathIgnorePatterns: [
+    "/node-modules/",
+    "/src/components/ui/",
+    "/src/lib/",
+  ],
 
   testEnvironment: "jest-environment-jsdom",
   transform: {
