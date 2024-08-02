@@ -18,6 +18,7 @@ import { toast } from "../ui/use-toast";
 import { formSchema } from "./formSchema";
 
 export type User = z.infer<typeof formSchema>;
+
 type UserFormProps = {
   close: () => void;
 };
@@ -35,6 +36,10 @@ export const UserForm = ({ close }: UserFormProps) => {
       zipCode: "",
     },
   });
+
+  const isFilled = Object.values(form.getValues()).every(
+    (value) => value.trim() !== ""
+  );
 
   const onSubmit = (data: User) => {
     mutation.mutate(data);
@@ -143,7 +148,7 @@ export const UserForm = ({ close }: UserFormProps) => {
             </FormItem>
           )}
         />
-        <Button role="button" type="submit" disabled={!form.formState.isValid}>
+        <Button role="button" type="submit" disabled={!isFilled}>
           Enregistrer
         </Button>
       </form>

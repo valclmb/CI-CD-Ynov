@@ -60,22 +60,19 @@ describe("UserForm Component", () => {
     expect(screen.getByText("Utilisateur créé !")).toBeInTheDocument();
   });
 
-  test("UserForm buttons become disabled if invalid email ", async () => {
+  test("UserForm errors if invalid email", async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
-
-    expect(submit).toBeEnabled();
 
     await act(() => {
       fireEvent.change(email, { target: { value: "Johndoeemail.com" } });
+      fireEvent.submit(submit);
     });
 
-    expect(submit).toBeDisabled();
+    expect(screen.getByText("Invalid email format")).toBeInTheDocument();
   });
 
   test("UserForm buttons become disabled if age is less than 18 ", async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
-
-    expect(submit).toBeEnabled();
 
     await act(() => {
       const date = new Date();
@@ -88,26 +85,30 @@ describe("UserForm Component", () => {
       fireEvent.change(birthDate, {
         target: { value: `${year}-${month}-${day}` },
       });
+      fireEvent.submit(submit);
     });
 
-    expect(submit).toBeDisabled();
+    expect(
+      screen.getByText("Invalid birth date,you must have at least 18 years old")
+    ).toBeInTheDocument();
   });
 
   test("UserForm buttons become disabled if zip code is invalid ", async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
 
-    expect(submit).toBeEnabled();
-
     await act(() => {
       fireEvent.change(zipCode, { target: { value: "750000" } });
+      fireEvent.submit(submit);
     });
 
-    expect(submit).toBeDisabled();
+    expect(
+      screen.getByText("Invalid zip code format expected 5 digits")
+    ).toBeInTheDocument();
   });
 });
 
 describe("UserForm Component empty", () => {
-  test("UserForm buttons is disabled if empty ", async () => {
+  test("UserForm buttons is disabled if empty", async () => {
     renderWithQueryClient(<UserForm close={() => {}} />);
 
     const submit = screen.getByRole("button", { name: "Enregistrer" });
