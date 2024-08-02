@@ -6,7 +6,7 @@ describe("Home page spec", () => {
     cy.contains("Liste des utilisateurs");
   });
 
-  it("open modal and create user", () => {
+  it("open modal and create user", async () => {
     // Définir les données de test
     const userData = {
       firstName: "John",
@@ -21,7 +21,7 @@ describe("Home page spec", () => {
     const users = [];
 
     // Intercepter la requête POST et ajouter les données au tableau d'utilisateurs
-    cy.intercept("POST", "/users*", (req) => {
+    cy.intercept("POST", "**/users", (req) => {
       expect(req.body).to.include(userData);
       // Ajouter les nouvelles données au tableau des utilisateurs
       users.push(req.body);
@@ -35,7 +35,7 @@ describe("Home page spec", () => {
     }).as("postUser");
 
     // Intercepter la requête GET et renvoyer les utilisateurs mis à jour
-    cy.intercept("GET", "/users*", (req) => {
+    cy.intercept("GET", "**/users", (req) => {
       req.reply({
         statusCode: 200,
         body: {
@@ -58,7 +58,10 @@ describe("Home page spec", () => {
 
     cy.get("button").contains("Enregistrer").click();
 
-    // Vérifier que les données sont affichées correctement
+    cy.wait("@postUser");
+
+    cy.wait("@getUsers");
+
     cy.contains(userData.lastName.toUpperCase());
     cy.contains(userData.firstName);
     cy.contains(userData.email);
