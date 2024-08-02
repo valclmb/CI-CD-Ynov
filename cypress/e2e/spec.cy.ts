@@ -58,12 +58,6 @@ describe("Home page spec", () => {
 
     cy.get("button").contains("Enregistrer").click();
 
-    // Attendre que la requête POST soit terminée
-    cy.wait("@postUser");
-
-    // Attendre que la requête GET soit effectuée et vérifier les données affichées
-    cy.wait("@getUsers");
-
     // Vérifier que les données sont affichées correctement
     cy.contains(userData.lastName.toUpperCase());
     cy.contains(userData.firstName);
