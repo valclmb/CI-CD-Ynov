@@ -3,11 +3,11 @@ import { createUser, getAllUsers } from "./api";
 // Mock the global fetch function
 global.fetch = jest.fn();
 
-describe("getAllUsers", () => {
-  beforeEach(() => {
-    (fetch as jest.Mock).mockClear();
-  });
+beforeEach(() => {
+  (fetch as jest.Mock).mockClear();
+});
 
+describe("getAllUsers", () => {
   it("fetches successfully data from an API", async () => {
     const data = {
       users: [
@@ -46,9 +46,6 @@ describe("getAllUsers", () => {
 global.fetch = jest.fn();
 
 describe("createUser", () => {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
   const user = {
     firstName: "John",
     lastName: "Doe",
@@ -57,11 +54,16 @@ describe("createUser", () => {
     city: "Paris",
     zipCode: "75000",
   };
+
   it("make a POST request with the correct parameters and return the response data", async () => {
     const mockResponse = { id: 1, firstName: "John", lastName: "Doe" };
-    (fetch as jest.Mock).mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockResponse),
-    });
+
+    (fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(mockResponse),
+      })
+    );
 
     const result = await createUser(user);
 
@@ -77,7 +79,10 @@ describe("createUser", () => {
 
   it("throw an error if fetch fails", async () => {
     const errorMessage = "Network Error";
-    (fetch as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+    (fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.reject(new Error(errorMessage))
+    );
 
     await expect(createUser(user)).rejects.toThrow(errorMessage);
   });
