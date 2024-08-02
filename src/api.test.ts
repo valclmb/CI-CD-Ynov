@@ -57,9 +57,7 @@ describe("createUser", () => {
     city: "Paris",
     zipCode: "75000",
   };
-  it("should make a POST request with the correct parameters and return the response data", async () => {
-    // Mock de la réponse de fetch
-
+  it("make a POST request with the correct parameters and return the response data", async () => {
     const mockResponse = { id: 1, firstName: "John", lastName: "Doe" };
     (fetch as jest.Mock).mockResolvedValue({
       json: jest.fn().mockResolvedValue(mockResponse),
@@ -77,10 +75,10 @@ describe("createUser", () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it("should throw an error if fetch fails", async () => {
-    // Mock pour simuler une erreur
-    (fetch as jest.Mock).mockRejectedValue(new Error("Fetch failed"));
+  it("throw an error if fetch fails", async () => {
+    const errorMessage = "Network Error";
+    (fetch as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-    await expect(createUser(user)).rejects.toThrow("Fetch failed");
+    await expect(createUser(user)).rejects.toThrow(errorMessage);
   });
 });

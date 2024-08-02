@@ -4,7 +4,7 @@ import {
   hasNoSpecialCharacters,
   isValidEmail,
   isValidZipCode,
-} from "./validationUtils";
+} from "../../lib/validationUtils";
 
 export const formSchema = z.object({
   firstName: z

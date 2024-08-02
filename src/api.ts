@@ -33,7 +33,7 @@ export const createUser = (user: User) => {
       body: JSON.stringify(user),
     }).then((res) => res.json());
   } catch (error) {
-    console.error("Error creating user");
+    console.log(error);
     throw error;
   }
 };
