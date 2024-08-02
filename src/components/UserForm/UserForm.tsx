@@ -44,6 +44,8 @@ export const UserForm = ({ close }: UserFormProps) => {
     mutationFn: (data: User) => createUser(data),
     onSuccess: (res) => {
       if (res.success) {
+        console.log("success");
+
         toast({
           title: "Utilisateur créé !",
           description: "Votre compte a bien été créé",

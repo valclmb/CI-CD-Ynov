@@ -10,7 +10,7 @@ import {
 import { useQuery } from "react-query";
 import { User } from "./UserForm/UserForm";
 
-type UserList = User & { id: number };
+type UserList = User & { _id: number };
 
 export const UserList = () => {
   const { data, isLoading, isError } = useQuery({
@@ -35,7 +35,7 @@ export const UserList = () => {
       </TableHeader>
       <TableBody>
         {data.users.map((user: UserList) => (
-          <TableRow key={user.id}>
+          <TableRow key={user._id}>
             <TableCell>{user.lastName.toUpperCase()}</TableCell>
             <TableCell>{user.firstName}</TableCell>
             <TableCell>{user.email}</TableCell>
